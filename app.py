@@ -10,7 +10,15 @@ import io
 import sys
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional
+import types
 
+if "core" not in sys.modules:
+    try:
+        import core
+    except (ModuleNotFoundError, ImportError):
+        core_pkg = types.ModuleType("core")
+        core_pkg.__path__ = ["."]
+        sys.modules["core"] = core_pkg
 import streamlit.runtime
 
 # Automatically bootstrap Streamlit web server if invoked directly via `python app.py`
