@@ -520,158 +520,106 @@ render_html(
     .indicator-card.medium { border-left: 5px solid var(--amber-glow); }
     .indicator-card.low { border-left: 5px solid var(--emerald-glow); }
 
-    /* Universal Button Reset (Force Light Mode Styling to Prevent Dark Mode Black Buttons) */
-    .stButton > button,
-    button[data-testid="baseButton-secondary"],
-    div[data-testid="stButton"] > button {
-        background: #FFFFFF !important;
+    /* =========================================================================
+       UNIVERSAL LIGHT THEME ENFORCEMENT (100% Specificity Overrides)
+       ========================================================================= */
+    html, body, .stApp, [data-testid="stAppViewContainer"], .main {
+        background-color: #F8FAFC !important;
+        color: #0F172A !important;
+    }
+
+    /* ALL BUTTONS GLOBALLY (Forensic Subsystems, Synthetic Demos, Nav, Actions) */
+    html body .stApp button,
+    html body [data-testid="stAppViewContainer"] button,
+    html body [data-testid="stButton"] button,
+    html body button[data-testid="baseButton-secondary"],
+    html body button[kind="secondary"],
+    div[class*="st-key-btn_"] button {
         background-color: #FFFFFF !important;
-        color: #1E293B !important;
-        border: 1px solid #CBD5E1 !important;
+        background: #FFFFFF !important;
+        color: #0F172A !important;
+        border: 1.5px solid #CBD5E1 !important;
         border-radius: 9px !important;
         font-weight: 700 !important;
         font-size: 0.85rem !important;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
-        padding: 0.5rem 1rem !important;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
+        padding: 0.5rem 0.95rem !important;
         transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
-    .stButton > button p,
-    button[data-testid="baseButton-secondary"] p,
-    div[data-testid="stButton"] > button p,
-    .stButton > button span,
-    button[data-testid="baseButton-secondary"] span {
-        color: #1E293B !important;
+    html body .stApp button *,
+    html body [data-testid="stAppViewContainer"] button *,
+    html body [data-testid="stButton"] button *,
+    html body button[data-testid="baseButton-secondary"] *,
+    div[class*="st-key-btn_"] button * {
+        color: #0F172A !important;
         font-weight: 700 !important;
-    }
-    .stButton > button:hover,
-    button[data-testid="baseButton-secondary"]:hover,
-    div[data-testid="stButton"] > button:hover {
-        background: #EFF6FF !important;
-        background-color: #EFF6FF !important;
-        border-color: #93C5FD !important;
-        color: #1D4ED8 !important;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12) !important;
-        transform: translateY(-1px) !important;
-    }
-    .stButton > button:hover p,
-    button[data-testid="baseButton-secondary"]:hover p,
-    div[data-testid="stButton"] > button:hover p,
-    .stButton > button:hover span,
-    button[data-testid="baseButton-secondary"]:hover span {
-        color: #1D4ED8 !important;
-    }
-    .stButton > button[kind="primary"],
-    button[data-testid="baseButton-primary"],
-    div[data-testid="stButton"] > button[kind="primary"] {
-        background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 100%) !important;
-        background-color: #1D4ED8 !important;
-        color: #FFFFFF !important;
-        border-color: #1D4ED8 !important;
-        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
-    }
-    .stButton > button[kind="primary"] p,
-    button[data-testid="baseButton-primary"] p,
-    div[data-testid="stButton"] > button[kind="primary"] p {
-        color: #FFFFFF !important;
-    }
-    .stButton > button[kind="primary"]:hover,
-    button[data-testid="baseButton-primary"]:hover,
-    div[data-testid="stButton"] > button[kind="primary"]:hover {
-        background: linear-gradient(135deg, #1E40AF 0%, #1D4ED8 100%) !important;
-        box-shadow: 0 6px 22px rgba(37, 99, 235, 0.48) !important;
-        transform: translateY(-2px) !important;
-        color: #FFFFFF !important;
     }
 
-    /* Specifically target the 5 Forensic Subsystem Buttons */
-    div[class*="st-key-btn_ela"] button,
-    div[class*="st-key-btn_lap"] button,
-    div[class*="st-key-btn_orb"] button,
-    div[class*="st-key-btn_pdf"] button,
-    div[class*="st-key-btn_gst"] button {
-        background: #FFFFFF !important;
-        background-color: #FFFFFF !important;
-        color: #1E293B !important;
-        border: 1px solid #CBD5E1 !important;
-        border-radius: 9px !important;
-        font-weight: 700 !important;
-        font-size: 0.82rem !important;
-        box-shadow: 0 2px 5px rgba(15, 23, 42, 0.05) !important;
-    }
-    div[class*="st-key-btn_ela"] button p,
-    div[class*="st-key-btn_lap"] button p,
-    div[class*="st-key-btn_orb"] button p,
-    div[class*="st-key-btn_pdf"] button p,
-    div[class*="st-key-btn_gst"] button p {
-        color: #1E293B !important;
-        font-weight: 700 !important;
-    }
-    div[class*="st-key-btn_ela"] button:hover,
-    div[class*="st-key-btn_lap"] button:hover,
-    div[class*="st-key-btn_orb"] button:hover,
-    div[class*="st-key-btn_pdf"] button:hover,
-    div[class*="st-key-btn_gst"] button:hover {
-        background: #EFF6FF !important;
+    /* ALL BUTTONS ON HOVER */
+    html body .stApp button:hover,
+    html body [data-testid="stAppViewContainer"] button:hover,
+    html body [data-testid="stButton"] button:hover,
+    html body button[data-testid="baseButton-secondary"]:hover,
+    div[class*="st-key-btn_"] button:hover {
         background-color: #EFF6FF !important;
+        background: #EFF6FF !important;
         border-color: #3B82F6 !important;
         color: #1D4ED8 !important;
         transform: translateY(-1px) !important;
         box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15) !important;
     }
-    div[class*="st-key-btn_ela"] button:hover p,
-    div[class*="st-key-btn_lap"] button:hover p,
-    div[class*="st-key-btn_orb"] button:hover p,
-    div[class*="st-key-btn_pdf"] button:hover p,
-    div[class*="st-key-btn_gst"] button:hover p {
+    html body .stApp button:hover *,
+    html body [data-testid="stAppViewContainer"] button:hover *,
+    html body [data-testid="stButton"] button:hover *,
+    div[class*="st-key-btn_"] button:hover * {
         color: #1D4ED8 !important;
     }
-    div[class*="st-key-btn_ela"] button[kind="primary"],
-    div[class*="st-key-btn_lap"] button[kind="primary"],
-    div[class*="st-key-btn_orb"] button[kind="primary"],
-    div[class*="st-key-btn_pdf"] button[kind="primary"],
-    div[class*="st-key-btn_gst"] button[kind="primary"] {
+
+    /* PRIMARY BUTTONS: Gradient blue with white text */
+    html body .stApp button[kind="primary"],
+    html body button[data-testid="baseButton-primary"],
+    html body button[kind="primary"] *,
+    html body button[data-testid="baseButton-primary"] * {
         background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 100%) !important;
         background-color: #1D4ED8 !important;
         color: #FFFFFF !important;
-        border-color: #1D4ED8 !important;
+        border: 1px solid #1D4ED8 !important;
         box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
     }
-    div[class*="st-key-btn_ela"] button[kind="primary"] p,
-    div[class*="st-key-btn_lap"] button[kind="primary"] p,
-    div[class*="st-key-btn_orb"] button[kind="primary"] p,
-    div[class*="st-key-btn_pdf"] button[kind="primary"] p,
-    div[class*="st-key-btn_gst"] button[kind="primary"] p {
-        color: #FFFFFF !important;
-    }
 
-    /* Fix Selectbox, Text Inputs, and File Uploader from turning black in dark mode */
-    div[data-baseweb="select"] > div,
-    div[data-baseweb="select"] div {
+    /* COMPLETE SELECTBOX OVERRIDE (Input, Arrow, and Dropdown Chevron) */
+    html body [data-baseweb="select"],
+    html body [data-baseweb="select"] > div,
+    html body [data-baseweb="select"] div,
+    html body [data-baseweb="select"] *,
+    html body [data-baseweb="select"] svg {
         background-color: #FFFFFF !important;
         background: #FFFFFF !important;
         color: #0F172A !important;
-        border-color: #CBD5E1 !important;
+        fill: #0F172A !important;
+    }
+    html body [data-baseweb="select"] > div {
+        border: 1.5px solid #CBD5E1 !important;
         border-radius: 9px !important;
     }
-    div[data-baseweb="select"] * {
-        color: #0F172A !important;
-    }
-    div[data-baseweb="popover"],
-    div[data-baseweb="menu"],
-    li[data-baseweb="menu-item"] {
+
+    /* DROPDOWN POPUP MENU */
+    html body [data-baseweb="popover"],
+    html body [data-baseweb="menu"],
+    html body li[data-baseweb="menu-item"] {
         background-color: #FFFFFF !important;
         background: #FFFFFF !important;
         color: #0F172A !important;
     }
-    li[data-baseweb="menu-item"]:hover {
+    html body li[data-baseweb="menu-item"]:hover {
         background-color: #EFF6FF !important;
         color: #1D4ED8 !important;
     }
 
-    /* All Text Inputs (including Admin Login username & password) */
-    div[data-testid="stTextInput"] input,
-    input[type="text"],
-    input[type="password"] {
+    /* ALL TEXT INPUTS & ADMIN LOGIN INPUTS */
+    html body [data-testid="stTextInput"] input,
+    html body input[type="text"],
+    html body input[type="password"] {
         background-color: #FFFFFF !important;
         background: #FFFFFF !important;
         color: #0F172A !important;
@@ -679,13 +627,13 @@ render_html(
         border-radius: 9px !important;
         padding: 0.55rem 0.85rem !important;
     }
-    div[data-testid="stTextInput"] input:focus {
+    html body [data-testid="stTextInput"] input:focus {
         border-color: #2563EB !important;
         box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
     }
 
-    /* Streamlit Form Container (Admin Login card) */
-    div[data-testid="stForm"] {
+    /* ADMIN LOGIN FORM CARD */
+    html body [data-testid="stForm"] {
         background-color: #FFFFFF !important;
         background: #FFFFFF !important;
         border: 1px solid #E2E8F0 !important;
@@ -693,45 +641,21 @@ render_html(
         box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.08) !important;
         padding: 1.75rem !important;
     }
-    div[data-testid="stFormSubmitButton"] > button {
-        background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 100%) !important;
-        color: #FFFFFF !important;
-        border: 1px solid #1D4ED8 !important;
-        font-weight: 800 !important;
-        font-size: 0.92rem !important;
-        padding: 0.6rem 1.2rem !important;
-        border-radius: 10px !important;
-        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
-    }
-    div[data-testid="stFormSubmitButton"] > button p {
-        color: #FFFFFF !important;
-    }
 
-    /* All Widget Labels */
-    label,
-    div[data-testid="stWidgetLabel"] p,
-    div[data-testid="stSelectbox"] label p,
-    div[data-testid="stTextInput"] label p,
-    div[data-testid="stFileUploader"] label p {
-        color: #0F172A !important;
-        font-weight: 700 !important;
-        font-size: 0.88rem !important;
-    }
-
-    /* File Uploader Dropzone and Upload Button */
-    [data-testid="stFileUploaderDropzone"],
-    div[data-testid="stFileUploader"] section {
+    /* FILE UPLOADER DROPZONE */
+    html body [data-testid="stFileUploaderDropzone"],
+    html body [data-testid="stFileUploader"] section {
         background-color: #FFFFFF !important;
         background: #FFFFFF !important;
         border: 1.5px dashed #CBD5E1 !important;
         border-radius: 12px !important;
     }
-    [data-testid="stFileUploaderDropzone"] *,
-    div[data-testid="stFileUploader"] section * {
+    html body [data-testid="stFileUploaderDropzone"] *,
+    html body [data-testid="stFileUploader"] section * {
         color: #0F172A !important;
     }
-    [data-testid="stFileUploaderDropzone"] button,
-    div[data-testid="stFileUploader"] section button {
+    html body [data-testid="stFileUploaderDropzone"] button,
+    html body [data-testid="stFileUploader"] section button {
         background-color: #EFF6FF !important;
         background: #EFF6FF !important;
         color: #1D4ED8 !important;
@@ -739,14 +663,21 @@ render_html(
         border-radius: 8px !important;
         padding: 0.35rem 0.85rem !important;
     }
-    [data-testid="stFileUploaderDropzone"] button *,
-    div[data-testid="stFileUploader"] section button * {
+    html body [data-testid="stFileUploaderDropzone"] button *,
+    html body [data-testid="stFileUploader"] section button * {
         color: #1D4ED8 !important;
         font-weight: 700 !important;
     }
-    [data-testid="stFileUploaderDropzone"] small,
-    div[data-testid="stFileUploader"] section small {
-        color: #64748B !important;
+
+    /* ALL LABELS ACROSS ENTIRE APPLICATION */
+    html body label,
+    html body [data-testid="stWidgetLabel"] p,
+    html body [data-testid="stSelectbox"] label p,
+    html body [data-testid="stTextInput"] label p,
+    html body [data-testid="stFileUploader"] label p {
+        color: #0F172A !important;
+        font-weight: 700 !important;
+        font-size: 0.88rem !important;
     }
 
     /* Tabs */
@@ -1879,17 +1810,17 @@ def page_analyze(fb_service: FirebaseService, persist_fb: bool, upload_storage: 
 
         d1, d2, d3 = st.columns(3)
         with d1:
-            if st.button("🟢 Clean Invoice", use_container_width=True, help="100% Valid arithmetic, proper GSTIN, zero tampering (Target: Low Risk)"):
+            if st.button("🟢 Clean Invoice", key="btn_demo_clean", use_container_width=True, help="100% Valid arithmetic, proper GSTIN, zero tampering (Target: Low Risk)"):
                 st.session_state["demo_file"] = generate_synthetic_invoice_png(tampered=False)
                 st.session_state["latest_result"] = None
                 st.rerun()
         with d2:
-            if st.button("⚠️ Tampered PNG", use_container_width=True, help="Visual pixel manipulation, noise floor anomaly (Target: Med/High Risk)"):
+            if st.button("⚠️ Tampered PNG", key="btn_demo_tamper_png", use_container_width=True, help="Visual pixel manipulation, noise floor anomaly (Target: Med/High Risk)"):
                 st.session_state["demo_file"] = generate_synthetic_invoice_png(tampered=True)
                 st.session_state["latest_result"] = None
                 st.rerun()
         with d3:
-            if st.button("🚨 Tampered PDF", use_container_width=True, help="Multiple %%EOF, whiteout rectangle, mixed fonts (Target: High Risk)"):
+            if st.button("🚨 Tampered PDF", key="btn_demo_tamper_pdf", use_container_width=True, help="Multiple %%EOF, whiteout rectangle, mixed fonts (Target: High Risk)"):
                 st.session_state["demo_file"] = generate_synthetic_tampered_pdf()
                 st.session_state["latest_result"] = None
                 st.rerun()
@@ -1907,7 +1838,7 @@ def page_analyze(fb_service: FirebaseService, persist_fb: bool, upload_storage: 
                 </div>
                 """
             )
-            if st.button("Clear Synthetic Sample", use_container_width=True):
+            if st.button("Clear Synthetic Sample", key="btn_demo_clear", use_container_width=True):
                 st.session_state["demo_file"] = None
                 st.session_state["latest_result"] = None
                 st.rerun()
