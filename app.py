@@ -644,28 +644,109 @@ render_html(
         color: #FFFFFF !important;
     }
 
-    /* Fix Selectbox and Input controls from turning black */
-    div[data-baseweb="select"] > div {
+    /* Fix Selectbox, Text Inputs, and File Uploader from turning black in dark mode */
+    div[data-baseweb="select"] > div,
+    div[data-baseweb="select"] div {
         background-color: #FFFFFF !important;
+        background: #FFFFFF !important;
         color: #0F172A !important;
-        border: 1px solid #CBD5E1 !important;
+        border-color: #CBD5E1 !important;
         border-radius: 9px !important;
     }
     div[data-baseweb="select"] * {
         color: #0F172A !important;
     }
-    div[data-testid="stSelectbox"] label,
-    div[data-testid="stTextInput"] label,
-    div[data-testid="stFileUploader"] label {
+    div[data-baseweb="popover"],
+    div[data-baseweb="menu"],
+    li[data-baseweb="menu-item"] {
+        background-color: #FFFFFF !important;
+        background: #FFFFFF !important;
+        color: #0F172A !important;
+    }
+    li[data-baseweb="menu-item"]:hover {
+        background-color: #EFF6FF !important;
+        color: #1D4ED8 !important;
+    }
+
+    /* All Text Inputs (including Admin Login username & password) */
+    div[data-testid="stTextInput"] input,
+    input[type="text"],
+    input[type="password"] {
+        background-color: #FFFFFF !important;
+        background: #FFFFFF !important;
+        color: #0F172A !important;
+        border: 1.5px solid #CBD5E1 !important;
+        border-radius: 9px !important;
+        padding: 0.55rem 0.85rem !important;
+    }
+    div[data-testid="stTextInput"] input:focus {
+        border-color: #2563EB !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+    }
+
+    /* Streamlit Form Container (Admin Login card) */
+    div[data-testid="stForm"] {
+        background-color: #FFFFFF !important;
+        background: #FFFFFF !important;
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 14px !important;
+        box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.08) !important;
+        padding: 1.75rem !important;
+    }
+    div[data-testid="stFormSubmitButton"] > button {
+        background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 100%) !important;
+        color: #FFFFFF !important;
+        border: 1px solid #1D4ED8 !important;
+        font-weight: 800 !important;
+        font-size: 0.92rem !important;
+        padding: 0.6rem 1.2rem !important;
+        border-radius: 10px !important;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
+    }
+    div[data-testid="stFormSubmitButton"] > button p {
+        color: #FFFFFF !important;
+    }
+
+    /* All Widget Labels */
+    label,
+    div[data-testid="stWidgetLabel"] p,
+    div[data-testid="stSelectbox"] label p,
+    div[data-testid="stTextInput"] label p,
+    div[data-testid="stFileUploader"] label p {
         color: #0F172A !important;
         font-weight: 700 !important;
+        font-size: 0.88rem !important;
     }
+
+    /* File Uploader Dropzone and Upload Button */
+    [data-testid="stFileUploaderDropzone"],
     div[data-testid="stFileUploader"] section {
         background-color: #FFFFFF !important;
-        border-color: #CBD5E1 !important;
+        background: #FFFFFF !important;
+        border: 1.5px dashed #CBD5E1 !important;
+        border-radius: 12px !important;
     }
+    [data-testid="stFileUploaderDropzone"] *,
     div[data-testid="stFileUploader"] section * {
         color: #0F172A !important;
+    }
+    [data-testid="stFileUploaderDropzone"] button,
+    div[data-testid="stFileUploader"] section button {
+        background-color: #EFF6FF !important;
+        background: #EFF6FF !important;
+        color: #1D4ED8 !important;
+        border: 1px solid #93C5FD !important;
+        border-radius: 8px !important;
+        padding: 0.35rem 0.85rem !important;
+    }
+    [data-testid="stFileUploaderDropzone"] button *,
+    div[data-testid="stFileUploader"] section button * {
+        color: #1D4ED8 !important;
+        font-weight: 700 !important;
+    }
+    [data-testid="stFileUploaderDropzone"] small,
+    div[data-testid="stFileUploader"] section small {
+        color: #64748B !important;
     }
 
     /* Tabs */
@@ -2633,10 +2714,10 @@ def _render_login_gate(expected_user: str, expected_pass: str) -> None:
             <div style="width:58px; height:58px; margin:0 auto 1rem auto; border-radius:16px; background:linear-gradient(135deg, #1E5BF8 0%, #00D2FF 100%); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(30,91,248,0.5);">
                 <span style="font-size:1.9rem;">🛡️</span>
             </div>
-            <div style="font-size:1.65rem; font-weight:800; color:#FFFFFF; letter-spacing:-0.02em;">
+            <div style="font-size:1.65rem; font-weight:800; color:#0F172A; letter-spacing:-0.02em;">
                 KAVACH Enterprise Access
             </div>
-            <div style="font-size:0.88rem; color:#94A3B8; margin-top:0.35rem; font-weight:500;">
+            <div style="font-size:0.88rem; color:#64748B; margin-top:0.35rem; font-weight:500;">
                 Document Forensics &amp; Verification Authentication Gateway
             </div>
         </div>
@@ -2646,10 +2727,10 @@ def _render_login_gate(expected_user: str, expected_pass: str) -> None:
     _, col_form, _ = st.columns([1, 1.8, 1])
     with col_form:
         with st.form("admin_login_form"):
-            st.markdown("<div style='font-size:0.8rem; font-weight:700; color:#E2E8F0; margin-bottom:0.25rem;'>Administrator Username</div>", unsafe_allow_html=True)
+            st.markdown("<div style='font-size:0.84rem; font-weight:700; color:#0F172A; margin-bottom:0.35rem;'>Administrator Username</div>", unsafe_allow_html=True)
             input_user = st.text_input("Username", value=expected_user, label_visibility="collapsed")
 
-            st.markdown("<div style='font-size:0.8rem; font-weight:700; color:#E2E8F0; margin-top:0.6rem; margin-bottom:0.25rem;'>Administrator Password</div>", unsafe_allow_html=True)
+            st.markdown("<div style='font-size:0.84rem; font-weight:700; color:#0F172A; margin-top:0.85rem; margin-bottom:0.35rem;'>Administrator Password</div>", unsafe_allow_html=True)
             input_pass = st.text_input("Password", type="password", placeholder="Enter secure password", label_visibility="collapsed")
 
             st.markdown("<div style='height:0.8rem;'></div>", unsafe_allow_html=True)
