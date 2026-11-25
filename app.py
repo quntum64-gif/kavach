@@ -7,18 +7,21 @@ and professional forensic audits.
 from __future__ import annotations
 
 import io
+import os
 import sys
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional
 import types
 
+# Ensure 'core' package resolves whether modules are in ./core or in project root (cloud deployment fallback)
 if "core" not in sys.modules:
     try:
-        import core
+        import core  # noqa: F401
     except (ModuleNotFoundError, ImportError):
         core_pkg = types.ModuleType("core")
         core_pkg.__path__ = ["."]
         sys.modules["core"] = core_pkg
+
 import streamlit.runtime
 
 # Automatically bootstrap Streamlit web server if invoked directly via `python app.py`
@@ -517,38 +520,152 @@ render_html(
     .indicator-card.medium { border-left: 5px solid var(--amber-glow); }
     .indicator-card.low { border-left: 5px solid var(--emerald-glow); }
 
-    /* Buttons */
-    .stButton > button {
-        border-radius: 10px !important;
-        font-weight: 700 !important;
-        font-size: 0.88rem !important;
-        padding: 0.55rem 1.15rem !important;
-        transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        border: 1px solid var(--border-subtle) !important;
+    /* Universal Button Reset (Force Light Mode Styling to Prevent Dark Mode Black Buttons) */
+    .stButton > button,
+    button[data-testid="baseButton-secondary"],
+    div[data-testid="stButton"] > button {
+        background: #FFFFFF !important;
         background-color: #FFFFFF !important;
-        color: var(--text-primary) !important;
-        letter-spacing: -0.01em !important;
+        color: #1E293B !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 9px !important;
+        font-weight: 700 !important;
+        font-size: 0.85rem !important;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+        padding: 0.5rem 1rem !important;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
-    .stButton > button:hover {
-        transform: translateY(-2px) !important;
+    .stButton > button p,
+    button[data-testid="baseButton-secondary"] p,
+    div[data-testid="stButton"] > button p,
+    .stButton > button span,
+    button[data-testid="baseButton-secondary"] span {
+        color: #1E293B !important;
+        font-weight: 700 !important;
+    }
+    .stButton > button:hover,
+    button[data-testid="baseButton-secondary"]:hover,
+    div[data-testid="stButton"] > button:hover {
+        background: #EFF6FF !important;
+        background-color: #EFF6FF !important;
         border-color: #93C5FD !important;
         color: #1D4ED8 !important;
-        background-color: #EFF6FF !important;
-        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.14) !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12) !important;
+        transform: translateY(-1px) !important;
     }
-    .stButton > button:active {
-        transform: translateY(0px) !important;
+    .stButton > button:hover p,
+    button[data-testid="baseButton-secondary"]:hover p,
+    div[data-testid="stButton"] > button:hover p,
+    .stButton > button:hover span,
+    button[data-testid="baseButton-secondary"]:hover span {
+        color: #1D4ED8 !important;
     }
-    .stButton > button[kind="primary"] {
+    .stButton > button[kind="primary"],
+    button[data-testid="baseButton-primary"],
+    div[data-testid="stButton"] > button[kind="primary"] {
         background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 100%) !important;
+        background-color: #1D4ED8 !important;
         color: #FFFFFF !important;
         border-color: #1D4ED8 !important;
         box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
     }
-    .stButton > button[kind="primary"]:hover {
+    .stButton > button[kind="primary"] p,
+    button[data-testid="baseButton-primary"] p,
+    div[data-testid="stButton"] > button[kind="primary"] p {
+        color: #FFFFFF !important;
+    }
+    .stButton > button[kind="primary"]:hover,
+    button[data-testid="baseButton-primary"]:hover,
+    div[data-testid="stButton"] > button[kind="primary"]:hover {
         background: linear-gradient(135deg, #1E40AF 0%, #1D4ED8 100%) !important;
         box-shadow: 0 6px 22px rgba(37, 99, 235, 0.48) !important;
         transform: translateY(-2px) !important;
+        color: #FFFFFF !important;
+    }
+
+    /* Specifically target the 5 Forensic Subsystem Buttons */
+    div[class*="st-key-btn_ela"] button,
+    div[class*="st-key-btn_lap"] button,
+    div[class*="st-key-btn_orb"] button,
+    div[class*="st-key-btn_pdf"] button,
+    div[class*="st-key-btn_gst"] button {
+        background: #FFFFFF !important;
+        background-color: #FFFFFF !important;
+        color: #1E293B !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 9px !important;
+        font-weight: 700 !important;
+        font-size: 0.82rem !important;
+        box-shadow: 0 2px 5px rgba(15, 23, 42, 0.05) !important;
+    }
+    div[class*="st-key-btn_ela"] button p,
+    div[class*="st-key-btn_lap"] button p,
+    div[class*="st-key-btn_orb"] button p,
+    div[class*="st-key-btn_pdf"] button p,
+    div[class*="st-key-btn_gst"] button p {
+        color: #1E293B !important;
+        font-weight: 700 !important;
+    }
+    div[class*="st-key-btn_ela"] button:hover,
+    div[class*="st-key-btn_lap"] button:hover,
+    div[class*="st-key-btn_orb"] button:hover,
+    div[class*="st-key-btn_pdf"] button:hover,
+    div[class*="st-key-btn_gst"] button:hover {
+        background: #EFF6FF !important;
+        background-color: #EFF6FF !important;
+        border-color: #3B82F6 !important;
+        color: #1D4ED8 !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15) !important;
+    }
+    div[class*="st-key-btn_ela"] button:hover p,
+    div[class*="st-key-btn_lap"] button:hover p,
+    div[class*="st-key-btn_orb"] button:hover p,
+    div[class*="st-key-btn_pdf"] button:hover p,
+    div[class*="st-key-btn_gst"] button:hover p {
+        color: #1D4ED8 !important;
+    }
+    div[class*="st-key-btn_ela"] button[kind="primary"],
+    div[class*="st-key-btn_lap"] button[kind="primary"],
+    div[class*="st-key-btn_orb"] button[kind="primary"],
+    div[class*="st-key-btn_pdf"] button[kind="primary"],
+    div[class*="st-key-btn_gst"] button[kind="primary"] {
+        background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 100%) !important;
+        background-color: #1D4ED8 !important;
+        color: #FFFFFF !important;
+        border-color: #1D4ED8 !important;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
+    }
+    div[class*="st-key-btn_ela"] button[kind="primary"] p,
+    div[class*="st-key-btn_lap"] button[kind="primary"] p,
+    div[class*="st-key-btn_orb"] button[kind="primary"] p,
+    div[class*="st-key-btn_pdf"] button[kind="primary"] p,
+    div[class*="st-key-btn_gst"] button[kind="primary"] p {
+        color: #FFFFFF !important;
+    }
+
+    /* Fix Selectbox and Input controls from turning black */
+    div[data-baseweb="select"] > div {
+        background-color: #FFFFFF !important;
+        color: #0F172A !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 9px !important;
+    }
+    div[data-baseweb="select"] * {
+        color: #0F172A !important;
+    }
+    div[data-testid="stSelectbox"] label,
+    div[data-testid="stTextInput"] label,
+    div[data-testid="stFileUploader"] label {
+        color: #0F172A !important;
+        font-weight: 700 !important;
+    }
+    div[data-testid="stFileUploader"] section {
+        background-color: #FFFFFF !important;
+        border-color: #CBD5E1 !important;
+    }
+    div[data-testid="stFileUploader"] section * {
+        color: #0F172A !important;
     }
 
     /* Tabs */
@@ -2506,11 +2623,62 @@ def page_about(fb_service: FirebaseService, analyst_id: str) -> None:
 
 
 # -----------------------------------------------------------------------------
+# Enterprise Admin Authentication Gate
+# -----------------------------------------------------------------------------
+def _render_login_gate(expected_user: str, expected_pass: str) -> None:
+    """Render a secure, modern admin authentication screen matching the VeriTrust AI theme."""
+    render_html(
+        """
+        <div style="max-width:440px; margin:3.5rem auto 1.2rem auto; text-align:center;">
+            <div style="width:58px; height:58px; margin:0 auto 1rem auto; border-radius:16px; background:linear-gradient(135deg, #1E5BF8 0%, #00D2FF 100%); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(30,91,248,0.5);">
+                <span style="font-size:1.9rem;">🛡️</span>
+            </div>
+            <div style="font-size:1.65rem; font-weight:800; color:#FFFFFF; letter-spacing:-0.02em;">
+                KAVACH Enterprise Access
+            </div>
+            <div style="font-size:0.88rem; color:#94A3B8; margin-top:0.35rem; font-weight:500;">
+                Document Forensics &amp; Verification Authentication Gateway
+            </div>
+        </div>
+        """
+    )
+
+    _, col_form, _ = st.columns([1, 1.8, 1])
+    with col_form:
+        with st.form("admin_login_form"):
+            st.markdown("<div style='font-size:0.8rem; font-weight:700; color:#E2E8F0; margin-bottom:0.25rem;'>Administrator Username</div>", unsafe_allow_html=True)
+            input_user = st.text_input("Username", value=expected_user, label_visibility="collapsed")
+
+            st.markdown("<div style='font-size:0.8rem; font-weight:700; color:#E2E8F0; margin-top:0.6rem; margin-bottom:0.25rem;'>Administrator Password</div>", unsafe_allow_html=True)
+            input_pass = st.text_input("Password", type="password", placeholder="Enter secure password", label_visibility="collapsed")
+
+            st.markdown("<div style='height:0.8rem;'></div>", unsafe_allow_html=True)
+            submit = st.form_submit_button("🔐 Authenticate & Enter", use_container_width=True)
+
+            if submit:
+                if input_user.strip() == expected_user.strip() and input_pass == expected_pass:
+                    st.session_state["authenticated"] = True
+                    st.session_state["analyst_id"] = input_user.strip() or "Admin Auditor"
+                    st.success("Authentication verified! Launching forensic dashboard...")
+                    st.rerun()
+                else:
+                    st.error("Authentication failed: Invalid administrator username or password.")
+
+
+# -----------------------------------------------------------------------------
 # Main Application Entrypoint
 # -----------------------------------------------------------------------------
 def main() -> None:
     _init_session_state()
     fb_service = get_firebase_service()
+
+    admin_user_env = os.getenv("ADMIN_USERNAME", "").strip()
+    admin_pass_env = os.getenv("ADMIN_PASSWORD", "").strip()
+
+    # If ADMIN_PASSWORD is set in environment variables, enforce authentication
+    if admin_pass_env and not st.session_state.get("authenticated", False):
+        _render_login_gate(admin_user_env or "admin", admin_pass_env)
+        return
 
     with st.sidebar:
         render_html(
@@ -2578,19 +2746,23 @@ def main() -> None:
                 """
             )
         else:
+            err_msg = fb_service.status.message or "Firebase credentials not set in env. In-memory auditing active."
             render_html(
-                """
+                f"""
                 <div style="background:#241E15; border:1px solid #B45309; border-radius:10px; padding:0.65rem 0.85rem; margin-bottom:0.75rem;">
                     <div style="display:flex; align-items:center; gap:0.4rem; font-size:0.82rem; font-weight:700; color:#FBBF24;">
                         <span style="width:8px; height:8px; border-radius:50%; background:#F59E0B; display:inline-block;"></span>
                         Local Session Mode
                     </div>
                     <div style="font-size:0.73rem; color:#E2E8F0; margin-top:0.25rem;">
-                        Firebase credentials not set in env. In-memory auditing active.
+                        {err_msg}
                     </div>
                 </div>
                 """
             )
+            if st.button("🔄 Reconnect Database", key="reconnect_db_btn", use_container_width=True):
+                st.cache_resource.clear()
+                st.rerun()
 
         persist_fb = st.checkbox(
             "Sync Records to Cloud Firestore",
@@ -2606,10 +2778,16 @@ def main() -> None:
         st.markdown("<div style='height: 0.35rem;'></div>", unsafe_allow_html=True)
         analyst_id = st.text_input(
             "Auditor / Session ID",
-            value="Arpit Patil",
+            value=st.session_state.get("analyst_id", "Arpit Patil"),
             placeholder="e.g. Arpit Patil",
             help="Optional identifier recorded in Firestore collections for audit trail accountability.",
         )
+
+        if admin_pass_env and st.session_state.get("authenticated", False):
+            st.markdown("<div style='height: 0.5rem;'></div>", unsafe_allow_html=True)
+            if st.button("🔒 Sign Out (Admin)", key="admin_signout_btn", use_container_width=True):
+                st.session_state["authenticated"] = False
+                st.rerun()
 
         render_html(
             """
