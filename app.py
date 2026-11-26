@@ -669,12 +669,14 @@ render_html(
         font-weight: 700 !important;
     }
 
-    /* ALL LABELS ACROSS ENTIRE APPLICATION */
-    html body label,
-    html body [data-testid="stWidgetLabel"] p,
-    html body [data-testid="stSelectbox"] label p,
-    html body [data-testid="stTextInput"] label p,
-    html body [data-testid="stFileUploader"] label p {
+    /* ALL LABELS IN MAIN CONTENT AREA (Light Theme) */
+    .main label,
+    .main [data-testid="stWidgetLabel"] p,
+    .main [data-testid="stSelectbox"] label p,
+    .main [data-testid="stTextInput"] label p,
+    .main [data-testid="stFileUploader"] label p,
+    div[data-testid="stMainBlockContainer"] label,
+    div[data-testid="stMainBlockContainer"] [data-testid="stWidgetLabel"] p {
         color: #0F172A !important;
         font-weight: 700 !important;
         font-size: 0.88rem !important;
@@ -1063,6 +1065,83 @@ render_html(
         color: #FFFFFF !important;
         font-weight: 700 !important;
         box-shadow: 0 4px 16px rgba(30, 91, 248, 0.45) !important;
+    }
+
+    /* =========================================================================
+       SIDEBAR HIGH CONTRAST & VISIBILITY (Dark Navy SaaS Sidebar)
+       ========================================================================= */
+    html body section[data-testid="stSidebar"],
+    html body section[data-testid="stSidebar"] *,
+    html body section[data-testid="stSidebar"] label,
+    html body section[data-testid="stSidebar"] label p,
+    html body section[data-testid="stSidebar"] label span,
+    html body section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+    html body section[data-testid="stSidebar"] [data-testid="stCheckbox"] label,
+    html body section[data-testid="stSidebar"] [data-testid="stCheckbox"] label p,
+    html body section[data-testid="stSidebar"] [data-testid="stCheckbox"] label span,
+    html body section[data-testid="stSidebar"] [data-testid="stTextInput"] label,
+    html body section[data-testid="stSidebar"] [data-testid="stTextInput"] label p {
+        color: #FFFFFF !important;
+    }
+
+    /* Sidebar Checkbox Container Card */
+    html body section[data-testid="stSidebar"] [data-testid="stCheckbox"] {
+        background: rgba(255, 255, 255, 0.05) !important;
+        padding: 0.5rem 0.75rem !important;
+        border-radius: 8px !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        margin-bottom: 0.45rem !important;
+        transition: all 0.2s ease !important;
+    }
+
+    html body section[data-testid="stSidebar"] [data-testid="stCheckbox"]:hover {
+        background: rgba(255, 255, 255, 0.09) !important;
+        border-color: rgba(59, 130, 246, 0.4) !important;
+    }
+
+    html body section[data-testid="stSidebar"] [data-testid="stCheckbox"] label p {
+        color: #F8FAFC !important;
+        font-size: 0.86rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.01em !important;
+    }
+
+    /* Sidebar Input Labels & Inputs */
+    html body section[data-testid="stSidebar"] [data-testid="stTextInput"] label p {
+        color: #CBD5E1 !important;
+        font-size: 0.80rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+    }
+
+    html body section[data-testid="stSidebar"] [data-testid="stTextInput"] input {
+        background-color: #13203C !important;
+        color: #FFFFFF !important;
+        border: 1px solid #23355B !important;
+        border-radius: 8px !important;
+        font-size: 0.88rem !important;
+        font-weight: 600 !important;
+    }
+
+    /* Sidebar Buttons */
+    html body section[data-testid="stSidebar"] button {
+        background-color: #1E293B !important;
+        background: #1E293B !important;
+        color: #F8FAFC !important;
+        border: 1px solid #334155 !important;
+    }
+    html body section[data-testid="stSidebar"] button * {
+        color: #F8FAFC !important;
+    }
+    html body section[data-testid="stSidebar"] button:hover {
+        background-color: #2563EB !important;
+        background: #2563EB !important;
+        color: #FFFFFF !important;
+        border-color: #3B82F6 !important;
+    }
+    html body section[data-testid="stSidebar"] button:hover * {
+        color: #FFFFFF !important;
     }
     </style>
     """
