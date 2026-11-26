@@ -1040,8 +1040,16 @@ render_html(
     }
 
     /* Sidebar Radio Customization to match SaaS navigation */
-    section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label div:first-child {
+    section[data-testid="stSidebar"] [data-testid="stRadio"] [role="radiogroup"] label > div:first-child,
+    section[data-testid="stSidebar"] [data-testid="stRadio"] [role="radiogroup"] [data-baseweb="radio"] > div:first-child,
+    section[data-testid="stSidebar"] [data-testid="stRadio"] [role="radiogroup"] input,
+    section[data-testid="stSidebar"] [data-testid="stRadio"] [role="radiogroup"] svg {
         display: none !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label {
         background-color: transparent !important;
@@ -1124,24 +1132,316 @@ render_html(
         font-weight: 600 !important;
     }
 
-    /* Sidebar Buttons */
-    html body section[data-testid="stSidebar"] button {
-        background-color: #1E293B !important;
-        background: #1E293B !important;
+    /* Sidebar Action Buttons (e.g. Sign Out, Reconnect) */
+    html body section[data-testid="stSidebar"] .stButton > button {
+        background-color: #13203C !important;
+        background: #13203C !important;
         color: #F8FAFC !important;
-        border: 1px solid #334155 !important;
+        border: 1px solid #23355B !important;
+        border-radius: 8px !important;
+        font-weight: 700 !important;
+        transition: all 0.2s ease !important;
     }
-    html body section[data-testid="stSidebar"] button * {
+    html body section[data-testid="stSidebar"] .stButton > button * {
         color: #F8FAFC !important;
     }
-    html body section[data-testid="stSidebar"] button:hover {
-        background-color: #2563EB !important;
-        background: #2563EB !important;
+    html body section[data-testid="stSidebar"] .stButton > button:hover {
+        background-color: #1E5BF8 !important;
+        background: #1E5BF8 !important;
         color: #FFFFFF !important;
         border-color: #3B82F6 !important;
+        box-shadow: 0 4px 14px rgba(30, 91, 248, 0.4) !important;
     }
-    html body section[data-testid="stSidebar"] button:hover * {
+    html body section[data-testid="stSidebar"] .stButton > button:hover * {
         color: #FFFFFF !important;
+    }
+
+    /* Suppress and hide any tooltip help button boxes in the sidebar */
+    section[data-testid="stSidebar"] [data-testid="stTooltipHoverTarget"],
+    section[data-testid="stSidebar"] [data-testid="stTooltipIcon"],
+    section[data-testid="stSidebar"] button[data-testid="stWidgetLabelHelp"],
+    section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] button,
+    section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] div[data-testid="stTooltipHoverTarget"] {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        background: transparent !important;
+    }
+
+    /* =========================================================================
+       DYNAMIC ANIMATIONS & HIGH-CONTRAST PALETTE
+       ========================================================================= */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(14px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @keyframes pulseGlowGreen {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+        50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    }
+    @keyframes pulseGlowRed {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+        50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+    }
+    @keyframes pulseGlowAmber {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); }
+        50% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+    }
+    @keyframes borderGlowPulse {
+        0%, 100% { border-color: rgba(37, 99, 235, 0.25); }
+        50% { border-color: rgba(37, 99, 235, 0.6); }
+    }
+    @keyframes shimmerHighlight {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+
+    /* KPI Summary Cards Grid */
+    .history-kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+    .history-kpi-card {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 14px;
+        padding: 1.05rem 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.95rem;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        animation: fadeInUp 0.4s ease-out;
+    }
+    .history-kpi-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.08);
+        border-color: #CBD5E1;
+    }
+    .history-kpi-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        flex-shrink: 0;
+    }
+    .history-kpi-label {
+        font-size: 0.74rem;
+        font-weight: 700;
+        color: #64748B;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .history-kpi-value {
+        font-size: 1.45rem;
+        font-weight: 900;
+        color: #0F172A;
+        line-height: 1.2;
+        margin-top: 0.15rem;
+    }
+
+    /* Forensic Registry Table Container */
+    .forensic-registry-card {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+        margin-top: 1rem;
+        margin-bottom: 1.25rem;
+        animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: box-shadow 0.3s ease;
+    }
+    .forensic-registry-card:hover {
+        box-shadow: 0 12px 32px -4px rgba(37, 99, 235, 0.09);
+    }
+    .forensic-table-top-bar {
+        background: linear-gradient(135deg, #070D1E 0%, #0F1E3E 100%);
+        padding: 0.95rem 1.35rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .forensic-table-top-title {
+        color: #FFFFFF;
+        font-weight: 800;
+        font-size: 0.94rem;
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        letter-spacing: 0.01em;
+    }
+    .forensic-table-top-badge {
+        background: rgba(37, 99, 235, 0.35);
+        color: #93C5FD;
+        border: 1px solid rgba(147, 197, 253, 0.3);
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+    }
+    .forensic-table-scroll-area {
+        width: 100%;
+        overflow-x: auto;
+    }
+    .forensic-main-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+    .forensic-main-table thead th {
+        background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+        color: #475569;
+        font-size: 0.74rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 0.88rem 1.15rem;
+        border-bottom: 2px solid #E2E8F0;
+        white-space: nowrap;
+    }
+    .forensic-main-table tbody tr {
+        border-bottom: 1px solid #F1F5F9;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .forensic-main-table tbody tr:hover {
+        background: linear-gradient(90deg, rgba(37, 99, 235, 0.05) 0%, rgba(248, 250, 252, 0.85) 100%);
+        transform: translateX(3px);
+    }
+    .forensic-main-table tbody tr:last-child {
+        border-bottom: none;
+    }
+    .forensic-main-table tbody td {
+        padding: 0.9rem 1.15rem;
+        font-size: 0.86rem;
+        color: #1E293B;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    /* Cyber Document ID Pill */
+    .cyber-doc-pill {
+        background: #F1F5F9;
+        color: #0F172A;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 0.22rem 0.52rem;
+        border-radius: 6px;
+        border: 1px solid #CBD5E1;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.28rem;
+        letter-spacing: 0.02em;
+        transition: all 0.2s ease;
+    }
+    .cyber-doc-pill:hover {
+        border-color: #2563EB;
+        color: #2563EB;
+        background: #EFF6FF;
+    }
+
+    /* Status and Risk Badges */
+    .badge-status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.38rem;
+        padding: 0.3rem 0.72rem;
+        border-radius: 9999px;
+        font-size: 0.77rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+    }
+    .badge-low-risk {
+        background: #ECFDF5;
+        color: #065F46;
+        border: 1px solid #A7F3D0;
+    }
+    .badge-med-risk {
+        background: #FFFBEB;
+        color: #92400E;
+        border: 1px solid #FDE68A;
+    }
+    .badge-high-risk {
+        background: #FEF2F2;
+        color: #991B1B;
+        border: 1px solid #FECACA;
+    }
+    .pulse-dot-green {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #10B981;
+        display: inline-block;
+        animation: pulseGlowGreen 2s infinite;
+    }
+    .pulse-dot-amber {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #F59E0B;
+        display: inline-block;
+        animation: pulseGlowAmber 2s infinite;
+    }
+    .pulse-dot-red {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #EF4444;
+        display: inline-block;
+        animation: pulseGlowRed 2s infinite;
+    }
+
+    /* Micro Risk Meter Bar */
+    .micro-meter-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .micro-meter-track {
+        width: 52px;
+        height: 6px;
+        background: #E2E8F0;
+        border-radius: 99px;
+        overflow: hidden;
+    }
+    .micro-meter-fill {
+        height: 100%;
+        border-radius: 99px;
+    }
+
+    /* Universal Streamlit Dataframe Theme Overrides */
+    [data-testid="stDataFrame"],
+    [data-testid="stDataFrameGlideDataGrid"],
+    div[data-testid="stDataFrame"] {
+        background: #FFFFFF !important;
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 14px !important;
+        box-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.05) !important;
+        animation: fadeInUp 0.4s ease-out !important;
+        --gdg-bg-cell: #FFFFFF !important;
+        --gdg-bg-cell-medium: #F8FAFC !important;
+        --gdg-bg-header: #F1F5F9 !important;
+        --gdg-text-dark: #0F172A !important;
+        --gdg-text-medium: #334155 !important;
+        --gdg-border-color: #E2E8F0 !important;
     }
     </style>
     """
@@ -2596,9 +2896,9 @@ def page_history(fb_service: FirebaseService, analyst_id: str) -> None:
         classification = rec.get("risk_level") or ("High Risk" if score >= 60 else ("Medium Risk" if score >= 30 else "Low Risk"))
         table_rows.append(
             {
-                "Document ID": rec.get("document_id"),
-                "Filename": rec.get("filename"),
-                "Type": rec.get("document_type"),
+                "Document ID": rec.get("document_id") or "N/A",
+                "Filename": rec.get("filename") or "Document.pdf",
+                "Type": rec.get("document_type") or "Official Document",
                 "Company": info.get("company_name") or "—",
                 "Invoice No": info.get("invoice_number") or "—",
                 "GSTIN": info.get("gstin") or "—",
@@ -2606,9 +2906,173 @@ def page_history(fb_service: FirebaseService, analyst_id: str) -> None:
                 "Risk Score": f"{score}%",
                 "Classification": classification,
                 "Timestamp": str(rec.get("upload_timestamp", ""))[:19].replace("T", " "),
+                "_raw_score": score,
             }
         )
-    st.dataframe(pd.DataFrame(table_rows), use_container_width=True, hide_index=True)
+
+    # Executive KPI Metric Cards
+    total_docs = len(table_rows)
+    low_count = sum(1 for r in table_rows if r["_raw_score"] <= 29)
+    med_count = sum(1 for r in table_rows if 30 <= r["_raw_score"] <= 59)
+    high_count = sum(1 for r in table_rows if r["_raw_score"] >= 60)
+
+    render_html(
+        f"""
+        <div class="history-kpi-grid">
+            <div class="history-kpi-card">
+                <div class="history-kpi-icon" style="background:#EFF6FF; color:#1D4ED8;">📋</div>
+                <div>
+                    <div class="history-kpi-label">Total Verified</div>
+                    <div class="history-kpi-value">{total_docs}</div>
+                </div>
+            </div>
+            <div class="history-kpi-card">
+                <div class="history-kpi-icon" style="background:#ECFDF5; color:#059669;">🛡️</div>
+                <div>
+                    <div class="history-kpi-label">Authentic (Low Risk)</div>
+                    <div class="history-kpi-value" style="color:#059669;">{low_count}</div>
+                </div>
+            </div>
+            <div class="history-kpi-card">
+                <div class="history-kpi-icon" style="background:#FFFBEB; color:#D97706;">⚠️</div>
+                <div>
+                    <div class="history-kpi-label">Requires Review</div>
+                    <div class="history-kpi-value" style="color:#D97706;">{med_count}</div>
+                </div>
+            </div>
+            <div class="history-kpi-card">
+                <div class="history-kpi-icon" style="background:#FEF2F2; color:#DC2626;">🚨</div>
+                <div>
+                    <div class="history-kpi-label">High Risk Flagged</div>
+                    <div class="history-kpi-value" style="color:#DC2626;">{high_count}</div>
+                </div>
+            </div>
+        </div>
+        """
+    )
+
+    # Interactive Search, Filter & CSV Export
+    f_cols = st.columns([3.5, 2.0, 1.5], vertical_alignment="bottom")
+    with f_cols[0]:
+        search_q = st.text_input("🔍 Search Registry", placeholder="Search by Document ID, Company, or Filename...", label_visibility="collapsed")
+    with f_cols[1]:
+        filter_risk = st.selectbox(
+            "Filter Risk",
+            ["All Risk Levels", "Low Risk (Authentic)", "Medium Risk (Review)", "High Risk (Flagged)"],
+            label_visibility="collapsed"
+        )
+    with f_cols[2]:
+        export_df = pd.DataFrame([{k: v for k, v in r.items() if not k.startswith("_")} for r in table_rows])
+        csv_data = export_df.to_csv(index=False).encode("utf-8")
+        st.download_button("📥 Export CSV", data=csv_data, file_name="kavach_audit_trail.csv", mime="text/csv", use_container_width=True)
+
+    # Filter records
+    filtered = table_rows
+    if search_q.strip():
+        sq = search_q.strip().lower()
+        filtered = [
+            r for r in filtered
+            if sq in r["Document ID"].lower()
+            or sq in r["Filename"].lower()
+            or sq in r["Company"].lower()
+            or sq in r["GSTIN"].lower()
+        ]
+    if filter_risk == "Low Risk (Authentic)":
+        filtered = [r for r in filtered if r["_raw_score"] <= 29]
+    elif filter_risk == "Medium Risk (Review)":
+        filtered = [r for r in filtered if 30 <= r["_raw_score"] <= 59]
+    elif filter_risk == "High Risk (Flagged)":
+        filtered = [r for r in filtered if r["_raw_score"] >= 60]
+
+    if not filtered:
+        st.info("No documents match your search or filter criteria.")
+        return
+
+    # Build animated HTML Table
+    html_rows = []
+    for r in filtered:
+        sc = r["_raw_score"]
+        if sc <= 29:
+            badge_html = '<span class="badge-status-pill badge-low-risk"><span class="pulse-dot-green"></span>Low Risk</span>'
+            bar_color = "#10B981"
+        elif sc <= 59:
+            badge_html = '<span class="badge-status-pill badge-med-risk"><span class="pulse-dot-amber"></span>Medium Risk</span>'
+            bar_color = "#F59E0B"
+        else:
+            badge_html = '<span class="badge-status-pill badge-high-risk"><span class="pulse-dot-red"></span>High Risk</span>'
+            bar_color = "#EF4444"
+
+        doc_id = r["Document ID"]
+        filename = r["Filename"]
+        doc_type = r["Type"]
+        company = r["Company"]
+        invoice_no = r["Invoice No"]
+        gstin = r["GSTIN"]
+        grand_total = r["Grand Total"]
+        timestamp = r["Timestamp"]
+
+        row_html = f"""
+        <tr>
+            <td><span class="cyber-doc-pill"># {doc_id}</span></td>
+            <td>
+                <div style="font-weight:700; color:#0F172A; font-size:0.88rem;">📄 {filename}</div>
+                <div style="font-size:0.75rem; color:#64748B; margin-top:2px;">{doc_type}</div>
+            </td>
+            <td>
+                <div style="font-weight:600; color:#1E293B;">{company}</div>
+                <div style="font-size:0.75rem; color:#94A3B8; font-family:monospace; margin-top:2px;">GST: {gstin}</div>
+            </td>
+            <td>
+                <div style="font-weight:700; color:#0F172A; font-family:'Inter', sans-serif;">{grand_total}</div>
+                <div style="font-size:0.75rem; color:#64748B; margin-top:2px;">Inv: {invoice_no}</div>
+            </td>
+            <td>
+                <div class="micro-meter-container">
+                    <span style="font-weight:800; font-size:0.86rem; color:#0F172A; min-width:32px;">{sc}%</span>
+                    <div class="micro-meter-track">
+                        <div class="micro-meter-fill" style="width:{sc}%; background:{bar_color};"></div>
+                    </div>
+                </div>
+            </td>
+            <td>{badge_html}</td>
+            <td style="color:#64748B; font-size:0.80rem;">{timestamp}</td>
+        </tr>
+        """
+        html_rows.append(row_html)
+
+    table_body = "\n".join(html_rows)
+    render_html(
+        f"""
+        <div class="forensic-registry-card">
+            <div class="forensic-table-top-bar">
+                <div class="forensic-table-top-title">
+                    <span>🛡️ Institutional Verification Audit Registry</span>
+                </div>
+                <div class="forensic-table-top-badge">
+                    {len(filtered)} Records Indexed
+                </div>
+            </div>
+            <div class="forensic-table-scroll-area">
+                <table class="forensic-main-table">
+                    <thead>
+                        <tr>
+                            <th>Document ID</th>
+                            <th>File &amp; Category</th>
+                            <th>Entity &amp; GSTIN</th>
+                            <th>Financial Total</th>
+                            <th>Risk Score</th>
+                            <th>Security Status</th>
+                            <th>Logged At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {table_body}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        """
+    )
 
 
 # -----------------------------------------------------------------------------
@@ -2871,7 +3335,6 @@ def main() -> None:
             "Auditor / Session ID",
             value=st.session_state.get("analyst_id", "Arpit Patil"),
             placeholder="e.g. Arpit Patil",
-            help="Optional identifier recorded in Firestore collections for audit trail accountability.",
         )
 
         if admin_pass_env and st.session_state.get("authenticated", False):
